@@ -4,17 +4,16 @@ const db = require('../db');
 
 // CREATE (Criar)
 router.post('/', (req, res) => {
-    const { Nome, fk_Usuario_Id_Usuario } = req.body;
+    const { Nome} = req.body;
 
-    const query = `INSERT INTO Docente (Nome, fk_Usuario_Id_Usuario) VALUES ('${Nome}', ${fk_Usuario_Id_Usuario})`;
+    const query = `INSERT INTO Docente (Nome) VALUES ('${Nome}')`;
 
     db.query(query, (err, result) => {
         if (err) {
             console.error("Erro ao adicionar docente:", err);
             res.status(500).send('Erro ao adicionar docente');
         } else {
-            console.log("Docente adicionado com sucesso:", result);
-            res.status(201).send('Docente adicionado com sucesso');
+            res.status(201).send({message:'Docente adicionado com sucesso'});
         }
     });
 });

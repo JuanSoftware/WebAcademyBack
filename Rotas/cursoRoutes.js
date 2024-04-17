@@ -34,9 +34,9 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const { nome } = req.body;
+    const { nome, vagas } = req.body;
 
-    const query = `INSERT INTO Curso (Nome) VALUES ('${nome}')`;
+    const query = `INSERT INTO Curso (Nome, Vagas) VALUES ('${nome}', '${vagas}')`;
 
     console.log("Query:", query);
 
@@ -46,16 +46,16 @@ router.post('/', (req, res) => {
             res.status(500).send('Erro ao criar curso');
         } else {
             console.log("Curso criado com sucesso:", result);
-            res.status(201).send('Curso criado com sucesso');
+            res.status(201).send({message: 'Curso criado com sucesso'});
         }
     });
 });
 
 router.put('/:id', (req, res) => {
     const cursoId = req.params.id;
-    const { nome } = req.body;
+    const { nome, vagas } = req.body;
 
-    const query = `UPDATE Curso SET Nome='${nome}' WHERE ID_Curso=${cursoId}`; // Corrigido para ID_Curso
+    const query = `UPDATE Curso SET Nome='${nome}', Vagas = '${vagas}' WHERE ID_Curso=${cursoId}`; // Corrigido para ID_Curso
 
     db.query(query, (err, result) => {
         if (err) {
@@ -63,7 +63,7 @@ router.put('/:id', (req, res) => {
             res.status(500).send('Erro ao atualizar curso');
         } else {
             console.log("Curso atualizado com sucesso:", result);
-            res.status(200).send('Curso atualizado com sucesso');
+            res.status(200).send({message: 'Curso alterado com sucesso!'});
         }
     });
 });
@@ -79,7 +79,7 @@ router.delete('/:id', (req, res) => {
             res.status(500).send('Erro ao excluir curso');
         } else {
             console.log("Curso excluído com sucesso:", result);
-            res.status(200).send('Curso excluído com sucesso');
+            res.status(200).send( {message: 'Curso excluído com sucesso'});
         }
     });
 });
